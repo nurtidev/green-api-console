@@ -309,6 +309,86 @@
       padding: 0 4px;
     }
 
+    /* ── Author card ── */
+    .author-card {
+      background: linear-gradient(135deg, #0f1923 0%, #1a2e1a 100%);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid rgba(0,179,65,.2);
+      box-shadow: var(--shadow);
+    }
+
+    .author-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #00e054);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      letter-spacing: -1px;
+    }
+
+    .author-info { flex: 1; min-width: 0; }
+
+    .author-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .author-role {
+      font-size: 11px;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .author-location {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .author-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .author-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .author-link:hover { opacity: .8; }
+
+    .author-link.tg {
+      background: rgba(41,182,246,.15);
+      color: #29b6f6;
+      border: 1px solid rgba(41,182,246,.25);
+    }
+
+    .author-link.gh {
+      background: rgba(255,255,255,.08);
+      color: #e0e0e0;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
     /* ── Footer ── */
     footer {
       text-align: center;
@@ -434,6 +514,26 @@
           <input type="text" id="fileCaption" placeholder="Add a caption..." />
         </div>
         <button class="btn btn-primary" onclick="sendFileByUrl()">Send file →</button>
+      </div>
+    </div>
+
+    <!-- Author -->
+    <div class="author-card">
+      <div class="author-avatar">NA</div>
+      <div class="author-info">
+        <div class="author-name">Nurtilek Assankhan</div>
+        <div class="author-role">Middle+ Backend Developer · Go</div>
+        <div class="author-location">📍 Astana, Kazakhstan</div>
+      </div>
+      <div class="author-links">
+        <a class="author-link tg" href="https://t.me/nurtilek_assankhan" target="_blank">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 13.847l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.888.712z"/></svg>
+          Telegram
+        </a>
+        <a class="author-link gh" href="https://github.com/nurtidev" target="_blank">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .322.216.694.825.576C20.565 21.796 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
       </div>
     </div>
 
