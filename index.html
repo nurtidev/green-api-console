@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GREEN-API Console</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00b341;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: #222; }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid #ebebeb;
+      margin: 4px 0;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #222;
+      background: #fafafa;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      border-color: #00b341;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 72px;
+      font-family: inherit;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 16px;
+      background: #fff;
+      border: 1.5px solid #00b341;
+      border-radius: 8px;
+      color: #00b341;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    button:hover { background: #00b341; color: #fff; }
+    button:active { opacity: .85; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    .response-panel {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .response-panel h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    #response {
+      flex: 1;
+      background: #f7f8fa;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13px;
+      color: #333;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 400px;
+      overflow-y: auto;
+      outline: none;
+    }
+
+    .response-label {
+      font-size: 12px;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      color: #bbb;
+    }
+
+    @media (max-width: 720px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GREEN<span>-API</span></div>
+  <span style="color:#aaa;font-size:13px;">Console</span>
+</header>
+
+<main>
+  <!-- Left panel: controls -->
+  <div class="panel">
+
+    <!-- Connection credentials -->
+    <div class="section">
+      <label>idInstance</label>
+      <input type="text" id="idInstance" placeholder="1234567890" />
+      <label>ApiTokenInstance</label>
+      <input type="text" id="apiToken" placeholder="your-api-token" />
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- getSettings -->
+    <div class="section">
+      <button onclick="getSettings()">getSettings</button>
+    </div>
+
+    <!-- getStateInstance -->
+    <div class="section">
+      <button onclick="getStateInstance()">getStateInstance</button>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- sendMessage -->
+    <div class="section">
+      <label>Phone (sendMessage)</label>
+      <input type="text" id="sendMsgPhone" placeholder="77771234567" />
+      <label>Message</label>
+      <textarea id="sendMsgText" placeholder="Hello, World!"></textarea>
+      <button onclick="sendMessage()">sendMessage</button>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- sendFileByUrl -->
+    <div class="section">
+      <label>Phone (sendFileByUrl)</label>
+      <input type="text" id="sendFileMsgPhone" placeholder="77771234567" />
+      <label>File URL</label>
+      <input type="text" id="fileUrl" placeholder="https://my.site.com/img/horse.png" />
+      <label>Caption (optional)</label>
+      <input type="text" id="fileCaption" placeholder="Caption..." />
+      <button onclick="sendFileByUrl()">sendFileByUrl</button>
+    </div>
+
+  </div>
+
+  <!-- Right panel: response -->
+  <div class="response-panel">
+    <h2>Response</h2>
+    <div class="response-label">API responses will appear here</div>
+    <div id="response" readonly tabindex="-1"></div>
+  </div>
+</main>
+
+<footer>GREEN API &copy; 2025</footer>
+
+<script>
+  const BASE = 'https://api.green-api.com';
+
+  function credentials() {
+    const id = document.getElementById('idInstance').value.trim();
+    const token = document.getElementById('apiToken').value.trim();
+    if (!id || !token) { showError('Please fill in idInstance and ApiTokenInstance.'); return null; }
+    return { id, token };
+  }
+
+  function showResponse(data) {
+    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+  }
+
+  function showError(msg) {
+    document.getElementById('response').textContent = '⚠ ' + msg;
+  }
+
+  async function apiGet(path) {
+    const c = credentials();
+    if (!c) return;
+    try {
+      const r = await fetch(`${BASE}/waInstance${c.id}/${path}/${c.token}`);
+      showResponse(await r.json());
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  async function apiPost(path, body) {
+    const c = credentials();
+    if (!c) return;
+    try {
+      const r = await fetch(`${BASE}/waInstance${c.id}/${path}/${c.token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      showResponse(await r.json());
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function getSettings()      { apiGet('getSettings'); }
+  function getStateInstance() { apiGet('getStateInstance'); }
+
+  function sendMessage() {
+    const phone = document.getElementById('sendMsgPhone').value.trim();
+    const msg   = document.getElementById('sendMsgText').value.trim();
+    if (!phone || !msg) { showError('Phone and message are required.'); return; }
+    apiPost('sendMessage', { chatId: `${phone}@c.us`, message: msg });
+  }
+
+  function sendFileByUrl() {
+    const phone   = document.getElementById('sendFileMsgPhone').value.trim();
+    const url     = document.getElementById('fileUrl').value.trim();
+    const caption = document.getElementById('fileCaption').value.trim();
+    if (!phone || !url) { showError('Phone and file URL are required.'); return; }
+    const fileName = url.split('/').pop() || 'file';
+    apiPost('sendFileByUrl', { chatId: `${phone}@c.us`, urlFile: url, fileName, caption });
+  }
+</script>
+
+</body>
+</html>
