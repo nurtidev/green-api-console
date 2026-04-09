@@ -7,253 +7,519 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --green: #00b341;
+      --green-light: #e6f7ed;
+      --green-dark: #009933;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --border: #e4e7ec;
+      --text: #1a1d23;
+      --muted: #6b7280;
+      --input-bg: #f9fafb;
+      --radius: 10px;
+      --shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f0f2f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+      background: var(--bg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      color: var(--text);
     }
 
+    /* ── Header ── */
     header {
-      background: #fff;
-      border-bottom: 1px solid #e0e0e0;
-      padding: 12px 24px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 56px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .logo {
-      font-size: 20px;
-      font-weight: 700;
-      color: #00b341;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green);
       letter-spacing: -0.5px;
     }
+    .logo span { color: var(--text); }
 
-    .logo span { color: #222; }
+    .header-badge {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: .3px;
+    }
 
+    /* ── Layout ── */
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 24px;
-      max-width: 1100px;
-      width: 100%;
-      margin: 40px auto;
-      padding: 0 24px;
-    }
-
-    .panel {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.08);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: 400px 1fr;
       gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 28px auto;
+      padding: 0 24px;
+      align-items: start;
     }
 
-    .section {
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
     }
 
-    .section-divider {
-      border: none;
-      border-top: 1px solid #ebebeb;
-      margin: 4px 0;
-    }
-
-    label {
-      font-size: 11px;
-      font-weight: 600;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 9px 12px;
-      border: 1px solid #d9d9d9;
+    .card-icon {
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .card-icon.green  { background: var(--green-light); }
+    .card-icon.blue   { background: #e8f0fe; }
+    .card-icon.purple { background: #f3e8ff; }
+    .card-icon.orange { background: #fff3e0; }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ── Credentials ── */
+    .credentials-card .card-body {
+      gap: 16px;
+    }
+
+    /* ── Field ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .3px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
       font-size: 14px;
-      color: #222;
-      background: #fafafa;
+      color: var(--text);
+      background: var(--input-bg);
       outline: none;
-      transition: border-color .15s;
-    }
-
-    input[type="text"]:focus, textarea:focus {
-      border-color: #00b341;
-      background: #fff;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 72px;
+      transition: border-color .15s, box-shadow .15s;
       font-family: inherit;
     }
 
-    button {
-      width: 100%;
-      padding: 10px 16px;
+    .field input::placeholder,
+    .field textarea::placeholder { color: #bbc0ca; }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--green);
       background: #fff;
-      border: 1.5px solid #00b341;
-      border-radius: 8px;
-      color: #00b341;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .15s, color .15s;
+      box-shadow: 0 0 0 3px rgba(0,179,65,.1);
     }
 
-    button:hover { background: #00b341; color: #fff; }
-    button:active { opacity: .85; }
-    button:disabled { opacity: .45; cursor: not-allowed; }
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
 
-    .response-panel {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.08);
-      padding: 28px 24px;
+    /* ── Methods stacked ── */
+    .methods {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .response-panel h2 {
-      font-size: 14px;
-      font-weight: 700;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: .5px;
+    /* ── Method card ── */
+    .method-card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
     }
+
+    /* ── Button ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      border: none;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+    }
+    .btn-primary:hover  { background: var(--green-dark); }
+    .btn-primary:active { opacity: .85; }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+    }
+    .btn-outline:hover  { background: var(--green-light); }
+    .btn-outline:active { opacity: .85; }
+
+    /* ── Response panel ── */
+    .response-card {
+      position: sticky;
+      top: 76px;
+    }
+
+    .response-card .card-body {
+      padding: 0;
+    }
+
+    .response-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d1d5db;
+      display: inline-block;
+      margin-right: 6px;
+      transition: background .2s;
+    }
+    .status-dot.active { background: var(--green); }
+    .status-dot.error  { background: #ef4444; }
+
+    .status-text {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      width: auto;
+    }
+    .copy-btn:hover { border-color: var(--green); color: var(--green); }
 
     #response {
-      flex: 1;
-      background: #f7f8fa;
-      border: 1px solid #e8e8e8;
-      border-radius: 8px;
-      padding: 16px;
+      padding: 20px;
       font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-      font-size: 13px;
-      color: #333;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #374151;
       white-space: pre-wrap;
       word-break: break-all;
-      min-height: 400px;
+      min-height: 460px;
+      max-height: calc(100vh - 200px);
       overflow-y: auto;
-      outline: none;
     }
 
-    .response-label {
-      font-size: 12px;
-      color: #aaa;
-      font-style: italic;
+    .response-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 300px;
+      color: #d1d5db;
     }
 
+    .response-empty-icon { font-size: 36px; }
+    .response-empty-text { font-size: 13px; }
+
+    /* ── Divider with label ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b0b7c3;
+      padding: 0 4px;
+    }
+
+    /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 16px;
+      padding: 20px;
       font-size: 12px;
-      color: #bbb;
+      color: #b0b7c3;
     }
 
-    @media (max-width: 720px) {
+    footer a { color: var(--green); text-decoration: none; }
+
+    @media (max-width: 780px) {
       main { grid-template-columns: 1fr; }
+      .response-card { position: static; }
     }
   </style>
 </head>
 <body>
 
+<!-- Header -->
 <header>
   <div class="logo">GREEN<span>-API</span></div>
-  <span style="color:#aaa;font-size:13px;">Console</span>
+  <span class="header-badge">Console</span>
 </header>
 
 <main>
-  <!-- Left panel: controls -->
-  <div class="panel">
 
-    <!-- Connection credentials -->
-    <div class="section">
-      <label>idInstance</label>
-      <input type="text" id="idInstance" placeholder="1234567890" />
-      <label>ApiTokenInstance</label>
-      <input type="text" id="apiToken" placeholder="your-api-token" />
+  <!-- Left column -->
+  <div style="display:flex;flex-direction:column;gap:12px;">
+
+    <!-- Credentials -->
+    <div class="card credentials-card">
+      <div class="card-header">
+        <div class="card-icon green">🔑</div>
+        <div>
+          <div class="card-title">Connection</div>
+          <div class="card-subtitle">Instance credentials</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>ID Instance</label>
+          <input type="text" id="idInstance" placeholder="e.g. 1234567890" />
+        </div>
+        <div class="field">
+          <label>API Token Instance</label>
+          <input type="text" id="apiToken" placeholder="your-api-token-here" />
+        </div>
+      </div>
     </div>
 
-    <hr class="section-divider" />
+    <!-- Instance methods -->
+    <div class="section-label" style="padding-left:4px;">Instance methods</div>
 
-    <!-- getSettings -->
-    <div class="section">
-      <button onclick="getSettings()">getSettings</button>
+    <div class="card method-card">
+      <div class="card-header">
+        <div class="card-icon blue">⚙️</div>
+        <div>
+          <div class="card-title">getSettings</div>
+          <div class="card-subtitle">Returns instance configuration</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <button class="btn btn-outline" onclick="getSettings()">Run getSettings</button>
+      </div>
     </div>
 
-    <!-- getStateInstance -->
-    <div class="section">
-      <button onclick="getStateInstance()">getStateInstance</button>
+    <div class="card method-card">
+      <div class="card-header">
+        <div class="card-icon blue">📡</div>
+        <div>
+          <div class="card-title">getStateInstance</div>
+          <div class="card-subtitle">Returns WhatsApp connection state</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <button class="btn btn-outline" onclick="getStateInstance()">Run getStateInstance</button>
+      </div>
     </div>
 
-    <hr class="section-divider" />
+    <!-- Messaging methods -->
+    <div class="section-label" style="padding-left:4px;">Messaging methods</div>
 
-    <!-- sendMessage -->
-    <div class="section">
-      <label>Phone (sendMessage)</label>
-      <input type="text" id="sendMsgPhone" placeholder="77771234567" />
-      <label>Message</label>
-      <textarea id="sendMsgText" placeholder="Hello, World!"></textarea>
-      <button onclick="sendMessage()">sendMessage</button>
+    <div class="card method-card">
+      <div class="card-header">
+        <div class="card-icon purple">💬</div>
+        <div>
+          <div class="card-title">sendMessage</div>
+          <div class="card-subtitle">Send a text message</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Phone number</label>
+          <input type="text" id="sendMsgPhone" placeholder="77771234567" />
+        </div>
+        <div class="field">
+          <label>Message text</label>
+          <textarea id="sendMsgText" placeholder="Hello, World!"></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="sendMessage()">Send message →</button>
+      </div>
     </div>
 
-    <hr class="section-divider" />
-
-    <!-- sendFileByUrl -->
-    <div class="section">
-      <label>Phone (sendFileByUrl)</label>
-      <input type="text" id="sendFileMsgPhone" placeholder="77771234567" />
-      <label>File URL</label>
-      <input type="text" id="fileUrl" placeholder="https://my.site.com/img/horse.png" />
-      <label>Caption (optional)</label>
-      <input type="text" id="fileCaption" placeholder="Caption..." />
-      <button onclick="sendFileByUrl()">sendFileByUrl</button>
+    <div class="card method-card">
+      <div class="card-header">
+        <div class="card-icon orange">📎</div>
+        <div>
+          <div class="card-title">sendFileByUrl</div>
+          <div class="card-subtitle">Send a file from URL</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Phone number</label>
+          <input type="text" id="sendFileMsgPhone" placeholder="77771234567" />
+        </div>
+        <div class="field">
+          <label>File URL</label>
+          <input type="text" id="fileUrl" placeholder="https://example.com/image.png" />
+        </div>
+        <div class="field">
+          <label>Caption <span style="font-weight:400;color:#bbc0ca">(optional)</span></label>
+          <input type="text" id="fileCaption" placeholder="Add a caption..." />
+        </div>
+        <button class="btn btn-primary" onclick="sendFileByUrl()">Send file →</button>
+      </div>
     </div>
 
   </div>
 
-  <!-- Right panel: response -->
-  <div class="response-panel">
-    <h2>Response</h2>
-    <div class="response-label">API responses will appear here</div>
-    <div id="response" readonly tabindex="-1"></div>
+  <!-- Right column: Response -->
+  <div class="card response-card">
+    <div class="card-header">
+      <div class="card-icon green">📄</div>
+      <div>
+        <div class="card-title">Response</div>
+        <div class="card-subtitle">API method output</div>
+      </div>
+    </div>
+    <div class="response-toolbar">
+      <div>
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">Waiting for request...</span>
+      </div>
+      <button class="copy-btn" onclick="copyResponse()">Copy</button>
+    </div>
+    <div class="card-body">
+      <div id="responseEmpty" class="response-empty">
+        <div class="response-empty-icon">🔌</div>
+        <div class="response-empty-text">Run a method to see the response</div>
+      </div>
+      <pre id="response" style="display:none;"></pre>
+    </div>
   </div>
+
 </main>
 
-<footer>GREEN API &copy; 2025</footer>
+<footer>
+  GREEN API &copy; 2025 &nbsp;·&nbsp; <a href="https://green-api.com" target="_blank">green-api.com</a>
+</footer>
 
 <script>
   const BASE = 'https://api.green-api.com';
 
   function credentials() {
-    const id = document.getElementById('idInstance').value.trim();
+    const id    = document.getElementById('idInstance').value.trim();
     const token = document.getElementById('apiToken').value.trim();
-    if (!id || !token) { showError('Please fill in idInstance and ApiTokenInstance.'); return null; }
+    if (!id || !token) {
+      showError('Please fill in ID Instance and API Token Instance.');
+      return null;
+    }
     return { id, token };
   }
 
+  function setStatus(type, text) {
+    const dot  = document.getElementById('statusDot');
+    const label = document.getElementById('statusText');
+    dot.className = 'status-dot ' + (type === 'ok' ? 'active' : type === 'err' ? 'error' : '');
+    label.textContent = text;
+  }
+
   function showResponse(data) {
-    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+    document.getElementById('responseEmpty').style.display = 'none';
+    const el = document.getElementById('response');
+    el.style.display = 'block';
+    el.textContent = JSON.stringify(data, null, 2);
+    setStatus('ok', 'Success');
   }
 
   function showError(msg) {
-    document.getElementById('response').textContent = '⚠ ' + msg;
+    document.getElementById('responseEmpty').style.display = 'none';
+    const el = document.getElementById('response');
+    el.style.display = 'block';
+    el.textContent = '⚠  ' + msg;
+    setStatus('err', 'Error');
+  }
+
+  function copyResponse() {
+    const text = document.getElementById('response').textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
   }
 
   async function apiGet(path) {
     const c = credentials();
     if (!c) return;
+    setStatus('', 'Loading...');
     try {
       const r = await fetch(`${BASE}/waInstance${c.id}/${path}/${c.token}`);
       showResponse(await r.json());
@@ -265,6 +531,7 @@
   async function apiPost(path, body) {
     const c = credentials();
     if (!c) return;
+    setStatus('', 'Loading...');
     try {
       const r = await fetch(`${BASE}/waInstance${c.id}/${path}/${c.token}`, {
         method: 'POST',
