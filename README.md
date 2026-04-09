@@ -6,7 +6,7 @@ Built as a test assignment for the **Middle+ Backend Developer (Go)** position a
 
 ## Live Demo
 
-> Deploy link here (Railway / GitHub Pages)
+[https://green-api-console-production.up.railway.app](https://green-api-console-production.up.railway.app)
 
 ## Features
 
